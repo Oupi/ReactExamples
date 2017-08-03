@@ -11,7 +11,8 @@ class SecondButton extends React.Component {
   }
 
   render(){
-    return(<button onClick={this.click}>Awesome</button>);
+    let buttonStyle = {backgroundColor:this.props.color};
+    return(<button onClick={this.click} style={buttonStyle}>Awesome</button>);
   }
 }
 
