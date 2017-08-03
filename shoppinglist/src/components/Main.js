@@ -5,12 +5,24 @@ import List from "./List";
 import About from "./About";
 
 class Main extends React.Component{
+  constructor(props){
+    super(props);
+    this.callback = this.callback.bind(this);
+    this.state = {message:""};
+  }
+
+  callback(value){
+    this.setState({message:value});
+
+  }
+
   render(){
     return(
       <main>
+        <p>{this.state.message}</p>
         <Switch>
-          <Route exact path = "/" component = {Home}/>
-          <Route path = "/list" component = {List}/>
+          <Route exact path = "/" render = {()=>(<Home name = "Mario"/>)}/>
+          <Route path = "/list" render = {()=>(<List callback = {this.callback}/>)}/>
           <Route path = "/about" component = {About}/>
         </Switch>
       </main>
