@@ -9,6 +9,7 @@ class Header extends React.Component{
           <ul style={{listStyleType:"none"}}>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/list">List</Link></li>
+            <li><Link to="/add">Add</Link></li>
             <li><Link to="/about">About</Link></li>
           </ul>
         </nav>
