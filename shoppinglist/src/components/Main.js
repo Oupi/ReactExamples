@@ -10,10 +10,12 @@ class Main extends React.Component{
   constructor(props){
     super(props);
     this.callback = this.callback.bind(this);
+    this.remove = this.remove.bind(this);
     this.state = {itemList:[], id:100};
   }
 
   callback(value){
+    console.log("Main callback");
     let newList = this.state.itemList.slice();
     value.id = this.state.id;
     value.id++;
@@ -21,15 +23,28 @@ class Main extends React.Component{
     this.setState({itemList:newList, id:value.id});
   }
 
+  remove(value){
+    let temp = parseInt(value,10);
+    for (var i = 0; i < this.state.itemList.length; i++) {
+      if(temp === this.state.itemList[i].id){
+        let newList = this.state.itemList.slice();
+        newList.splice(i,1);
+        this.setState({itemList:newList});
+      }
+    }
+  }
+
   render(){
     return(
       <main>
         <p>{this.state.message}</p>
         <Switch>
-          <Route exact path = "/" render = {()=>(<Home name = "Mario"/>)}/>
-          <Route path = "/list" render = {()=>(<List/>)}/>
-          <Route path = "/add" render = {()=>(<Add callback = {this.callback}/>)}/>
-          <Route path = "/about" component = {About}/>
+          <Route exact path = "/" render={()=>
+            (<Home name="Mario"/>)}/>
+          <Route path="/list" render={()=>
+            (<List callback={this.remove} list={this.state.itemList}/>)}/>
+          <Route path="/add" render={()=>(<Add callback={this.callback}/>)}/>
+          <Route path="/about" component={About}/>
         </Switch>
       </main>
     );

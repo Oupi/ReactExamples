@@ -10,6 +10,7 @@ class Add extends React.Component {
   }
 
   change(event){
+    console.log("Add change");
     if(event.target.name === "item"){
       this.setState({type:event.target.value});
     } else if (event.target.name === "count") {
@@ -21,7 +22,10 @@ class Add extends React.Component {
 
   update(event){
     event.preventDefault();
-    if(this.state.item !== "" && this.state.count !== 0){
+    console.log("Add update");
+    console.log(this.state);
+    if(this.state.type !== "" && this.state.count !== 0){
+      console.log("Add update inside");
       let temp = {
         type:this.state.type,
         count:this.state.count,
@@ -33,7 +37,7 @@ class Add extends React.Component {
 
   render(){
     return(
-      <form onSubmit = {this.update}>
+      <form onSubmit={this.update}>
         Item type:<input type="text" onChange={this.change} name="item"/>
         <br/>
         Count:<input type="number" onChange={this.change} name="count"/>
