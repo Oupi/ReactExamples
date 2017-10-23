@@ -25,6 +25,7 @@ export default class Main extends React.Component {
               (<ContactList 
                 contactList={this.props.contactList}
                 updateList={this.props.updateList}
+                onDelete={this.props.onDelete}
               />) :
               (<Redirect to='/' />)
             } />

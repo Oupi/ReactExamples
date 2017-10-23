@@ -36,4 +36,16 @@ router.get('/contact', function (req, res) {
   })
 });
 
+router.delete('/contact/:id', function (req, res) {
+  Contact.remove({ '_id': req.params.id }, function (err) {
+    if (err) {
+      console.log('Failed to remove contact');
+      res.status(404).json({ 'message': 'Failed to remove contact' });
+    } else {
+      console.log('Success');
+      res.status(200).json({'message':'Success'});
+    }
+  });
+});
+
 module.exports = router;

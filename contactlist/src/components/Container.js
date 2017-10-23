@@ -11,6 +11,7 @@ export default class Container extends React.Component {
     this.onRegister = this.onRegister.bind(this);
     this.updateList = this.updateList.bind(this);
     this.addContact = this.addContact.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   onLogin(data) {
@@ -48,7 +49,7 @@ export default class Container extends React.Component {
       if (response.ok) {
         response.json().then((data) => {
           this.setState({ token: '', isLogged: false });
-        })
+        });
       } else {
         console.log(response.statusText);
       }
@@ -134,6 +135,31 @@ export default class Container extends React.Component {
     }
   }
 
+  onDelete(id) {
+    let deleteFetch = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': this.state.token
+      },
+      mode: 'cors'
+    };
+
+    fetch('/api/contact/' + id, deleteFetch).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          console.log(data);
+          this.updateList();
+        });
+      } else {
+        console.log(response.statusText);
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+
+  }
+
   render() {
     return (
       <div>
@@ -148,6 +174,7 @@ export default class Container extends React.Component {
           onRegister={this.onRegister}
           updateList={this.updateList}
           addContact={this.addContact}
+          onDelete={this.onDelete}
         />
       </div>)
   }
