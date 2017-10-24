@@ -22,6 +22,9 @@ export default class LoginForm extends React.Component{
     if(event.target.name === 'loginButton'){
       this.props.onLogin(temp);
     }
+    if(event.target.name === 'facebookButton'){
+      this.props.onFacebook();
+    }
     this.setState({userName:'',passphrase:''});
   }
   
@@ -53,6 +56,12 @@ export default class LoginForm extends React.Component{
           onClick={this.onSubmit}
           name='registerButton'
           value='register'
+        />
+        <input
+          type='button'
+          onClick={this.onSubmit}
+          name='facebookButton'
+          value='facebook'
         />
       </form>
     );

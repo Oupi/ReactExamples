@@ -17,12 +17,16 @@ export default class Main extends React.Component {
             exact path='/'
             render={() => this.props.isLogged ?
               (<Redirect to='/list' />) :
-              (<LoginForm onLogin={this.props.onLogin} onRegister={this.props.onRegister}/>)
+              (<LoginForm
+                onLogin={this.props.onLogin}
+                onRegister={this.props.onRegister}
+                onFacebook={this.props.onFacebook}
+              />)
             } />
           <Route
             path='/list'
             render={() => this.props.isLogged ?
-              (<ContactList 
+              (<ContactList
                 contactList={this.props.contactList}
                 updateList={this.props.updateList}
                 onDelete={this.props.onDelete}
@@ -32,7 +36,7 @@ export default class Main extends React.Component {
           <Route
             path='/contact'
             render={() => this.props.isLogged ?
-              (<NewContact addContact={this.props.addContact}/>) :
+              (<NewContact addContact={this.props.addContact} />) :
               (<Redirect to='/' />)
             } />
         </Switch>

@@ -12,6 +12,7 @@ export default class Container extends React.Component {
     this.updateList = this.updateList.bind(this);
     this.addContact = this.addContact.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onFacebook = this.onFacebook.bind(this);
   }
 
   onLogin(data) {
@@ -22,7 +23,8 @@ export default class Container extends React.Component {
       body: JSON.stringify({
         'userName': data.userName,
         'passphrase': data.passphrase
-      })
+      }),
+      credentials: 'include'
     }
     fetch('/login', login).then((response) => {
       if (response.ok) {
@@ -42,7 +44,8 @@ export default class Container extends React.Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       mode: 'cors',
-      body: JSON.stringify({ 'token': this.state.token })
+      body: JSON.stringify({ 'token': this.state.token }),
+      credentials: 'include'
     };
 
     fetch('/logout', logout).then((response) => {
@@ -81,6 +84,25 @@ export default class Container extends React.Component {
     });
   }
 
+  onFacebook() {
+    let facebook = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'no-cors',
+      credentials: 'include'
+    }
+    fetch('/auth/facebook', facebook).then((response) => {
+      console.log("response: ", response.text());
+      // response.json().then((data) => {
+      // console.log('Facebook login auth asldkoafsd success: ', data);
+      // });
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
   updateList() {
     if (this.state.token !== '') {
       let update = {
@@ -89,7 +111,8 @@ export default class Container extends React.Component {
           'Content-Type': 'application/json',
           'token': this.state.token
         },
-        mode: 'cors'
+        mode: 'cors',
+        credentials: 'include'
       }
       fetch('/api/contact', update).then((response) => {
         if (response.ok) {
@@ -119,7 +142,8 @@ export default class Container extends React.Component {
           'lastName': data.lastName,
           'phone': data.phone,
           'email': data.email
-        })
+        }),
+        credentials: 'include'
       }
       fetch('/api/contact', update).then((response) => {
         if (response.ok) {
@@ -142,7 +166,8 @@ export default class Container extends React.Component {
         'Content-Type': 'application/json',
         'token': this.state.token
       },
-      mode: 'cors'
+      mode: 'cors',
+      credentials: 'include'
     };
 
     fetch('/api/contact/' + id, deleteFetch).then((response) => {
@@ -175,6 +200,7 @@ export default class Container extends React.Component {
           updateList={this.updateList}
           addContact={this.addContact}
           onDelete={this.onDelete}
+          onFacebook={this.onFacebook}
         />
       </div>)
   }
